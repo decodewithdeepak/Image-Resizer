@@ -52,7 +52,7 @@ const resizeAndDownload = () => {
   // if quality checkbox is checked, pass 0.5 to imgQuality else pass 1.0
   // 1.0 is 100% quality where 0.5 is 50% of total. you can pass from 0.1 - 1.0
   const format = formatSelect.value || "image/jpeg";
-  const imgQuality = qualityInput.checked ? 0.5 : 1.0;
+  const imgQuality = qualityInput.checked ? 0.5 : 1.0; // change the quality of image
 
   // Set canvas dimensions based on input
   canvas.width = widthInput.value;
