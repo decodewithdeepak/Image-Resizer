@@ -11,12 +11,14 @@ const uploadBox = document.querySelector(".upload-box"),
   originalFileSizeText = document.getElementById("originalFileSize"),
   fileSizeText = document.getElementById("fileSize");
 
-let ogImageRatio, originalFileSize;
+  let ogImageRatio, originalFileSize, originalFileName = "";
 
+// Function to load the selected file
 const loadFile = (e) => {
   const file = e.target.files[0]; // Get first selected file
   if (!file) return; // Return if no file selected
 
+  originalFileName = file.name.split('.').slice(0, -1).join('.'); // Strip file extension
   previewImg.src = URL.createObjectURL(file); // Set preview image
   previewImg.addEventListener("load", () => {
     // Once image loads
@@ -43,6 +45,7 @@ heightInput.addEventListener("keyup", () => {
   widthInput.value = Math.floor(width);
 });
 
+// Resize image and set the download filename
 const resizeAndDownload = () => {
   const canvas = document.createElement("canvas");
   const a = document.createElement("a");
@@ -63,11 +66,12 @@ const resizeAndDownload = () => {
 
   // Get the image data URL with selected format and quality
   a.href = canvas.toDataURL(format, imgQuality);
-  const filename = filenameInput.value.trim() || "resized_image";
-  a.download = `${filename}.${format.split("/")[1]}`; // Set file extension
+  const downloadName = `${originalFileName}_compressed.${format.split("/")[1]}`; // Set download filename
+  a.download = downloadName;
   a.click(); // Trigger download
 };
 
+// Show compressed file size estimate
 const showCompressedFileSize = () => {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
